@@ -77,3 +77,36 @@ lnr2 = pd.read_json('learner.json')
 #print(lnr.columns)
 #print(lnr.dtypes)
 
+participants = [
+    ['Jason', '25', '190'],
+    ['Peter', '21', '181'],
+    ['Ray', '24', '184']
+]
+
+#ptn_no_index = pd.DataFrame(participants)
+#print(ptn_no_index)
+ptn = pd.DataFrame(participants, columns=('Participant', 'Age', 'Height'))
+ptn.to_csv('participants.csv', index=False)
+ptnr = pd.read_csv('participants.csv')
+#print(ptnr)
+
+dt3 = pd.DataFrame({
+    'A': [1, 2, 3, 4],
+    'B': [5, 6, 7, 8],
+    'C': [9, 10, 11, 12]
+})
+
+#print(dt3['A'])
+#print(dt3[['A', 'C']])
+#print(dt3[['A', 'B' ,'C']])
+
+#print(dt3.loc[0])
+#print(dt3.iloc[2])
+
+data2 = {'A' : [10,20,30], 'B' : [40, 50, 60]}
+df4 = pd.DataFrame(data2, index=[1,2,3])
+
+#print(f"DataFrame:\n{df4}")
+
+print(f" Using loc to locate row with index 1 : \n{df4.loc[1]}")
+print(f" Using iloc to locate row with exact position : \n{df4.iloc[2]}")
