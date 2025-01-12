@@ -41,4 +41,30 @@ data2_filled = data2.fillna({
     'City' : 'Unknown'
 })
 
-print(data2_filled)
+#print(data2_filled)
+
+
+data3 = pd.DataFrame({
+    'Name': ['Alice', 'Bob', 'Charlie', None],
+    'Age': [24, np.nan, 30, 29],
+    'Country': ['USA', 'UK', None, 'Canada']
+})
+
+missing_count = data3.isnull().sum()
+#print(missing_count)
+
+data3_dropped = data3.dropna()
+#print(data3_dropped)
+
+data3_fill = data3.copy()
+#print(data3_fill)
+
+numeric_cols = data3_fill.select_dtypes(include=[np.number]).columns
+print(numeric_cols)
+
+for i in numeric_cols:
+    data3_fill[i] = data3_fill[i].fillna(data3_fill.mean())
+
+print(data3_fill)
+
+
