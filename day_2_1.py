@@ -45,9 +45,10 @@ data2_filled = data2.fillna({
 
 
 data3 = pd.DataFrame({
-    'Name': ['Alice', 'Bob', 'Charlie', None],
-    'Age': [24, np.nan, 30, 29],
-    'Country': ['USA', 'UK', None, 'Canada']
+    'Name': ['Alice', 'Bob', None, 'David'],
+    'Age': [25, None, 30, 40],
+    'Score': [85.0, 90.0, None, 95.0],
+    'City': ['New York', 'Los Angeles', 'Chicago', None]
 })
 
 missing_count = data3.isnull().sum()
@@ -56,15 +57,24 @@ missing_count = data3.isnull().sum()
 data3_dropped = data3.dropna()
 #print(data3_dropped)
 
-data3_fill = data3.copy()
-#print(data3_fill)
+#numeric_column = data3.select_dtypes(include=[np.number])
+#print(numeric_column)
+numeric_column = data3.select_dtypes(include=[np.number]).columns
+#print(data3[numeric_column])
+data3[numeric_column] = data3[numeric_column].apply(lambda col: col.fillna(col.mean()), axis=0)
+#data3[numeric_column].apply(lambda col: col.fillna(col.mean()), axis=0) provide a temporary view of result, and it can be stored back to data3[numeric_column]by applying equal sign to change the value
+#inplace pandas operations vs outplace
+#df['column'].fillna(value, inplace=True) : modify the original data3
+#df['column'].fillna(value) is default outplace, not modifying the original data3, it creates a new coolumn
+#axis = 0 : apply the function to each column (vertically)
+#def add(x,y):
+#   return x+y
+#lambda x, y: x+y
+#print(numeric_column)
+#print(data3)
+#print(data3[numeric_column])
 
-numeric_cols = data3_fill.select_dtypes(include=[np.number]).columns
-print(numeric_cols)
-
-for i in numeric_cols:
-    data3_fill[i] = data3_fill[i].fillna(data3_fill.mean())
-
-print(data3_fill)
-
-
+categorical_columns = data3.select_dtypes(include=['object']).columns
+print(categorical_columns)
+data3[categorical_columns] = data3[categorical_columns].fillna("Missing")
+print(data3)
